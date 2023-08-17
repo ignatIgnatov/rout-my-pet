@@ -8,11 +8,12 @@ import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
-// import Details from "./components/Details/Details";
+import Details from "./components/Details/Details";
 import Create from "./components/Create/Create";
 // import Edit from "./components/Edit/Edit";
 import MyPets from "./components/MyPets/MyPets";
 import Footer from "./components/Footer/Footer";
+import Logout from "./components/Logout/Logout";
 
 function App() {
   const [userInfo, setUserInfo] = useState({
@@ -36,6 +37,13 @@ function App() {
     });
   };
 
+  const onLogout = () => {
+    setUserInfo({
+      isAuthenticated: false,
+      user: "",
+    });
+  }
+
   return (
     <div id="container">
       <Header {...userInfo} />
@@ -44,9 +52,11 @@ function App() {
         <Routes>
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/login" element={<Login onLogin={onLogin} />} />
+          <Route path="/logout" element={<Logout onLogout={onLogout} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/create" element={<Create />} />
           <Route path="/my-pets" element={<MyPets />} />
+          <Route path="/details/:petId" element={<Details />} />
         </Routes>
       </main>
       <Footer />

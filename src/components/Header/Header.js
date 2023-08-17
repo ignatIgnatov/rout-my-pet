@@ -21,7 +21,7 @@ const Header = ({ isAuthenticated, user }) => {
       <Link className="button" to="/create">
         Add Pet
       </Link>{" "}
-      <Link className="button" href="#">
+      <Link className="button" to="/logout">
         Logout
       </Link>
     </div>
