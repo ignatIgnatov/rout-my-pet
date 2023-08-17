@@ -1,7 +1,30 @@
-const Create = () => {
+import * as petService from "../../services/petService";
+import { useNavigate } from "react-router-dom";
+
+const Create = (e) => {
+const navigate = useNavigate();
+
+  const onPetCreate = (e) => {
+    e.preventDefault();
+    let formDtata = new FormData(e.currentTarget);
+
+    let name = formDtata.get("name");
+    let description = formDtata.get("description");
+    let imageUrl = formDtata.get("imageUrl");
+    let type = formDtata.get("type");
+
+    petService.create({
+      name, 
+      description, 
+      imageUrl, 
+      type
+    })
+      .then(result => {navigate("/dashboard")});
+  };
+
   return (
     <section id="create-page" className="create">
-      <form id="create-form" action="" method="">
+      <form id="create-form" onSubmit={onPetCreate} method="POST">
         <fieldset>
           <legend>Add new Pet</legend>
           <p className="field">
