@@ -11,8 +11,13 @@ const Login = ({ onLogin }) => {
     let formData = new FormData(e.currentTarget);
 
     let email = formData.get("email");
+    let password = formData.get("password");
 
-    authService.login(email);
+    authService.login(email, password)
+      .then((authData) => {
+        console.log('logged');
+        console.log(authData);
+      })
 
     onLogin(email);
 
