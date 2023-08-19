@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import * as petService from "../../services/petService";
 
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
+
 const Details = () => {
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const [pet, setPet] = useState({});
   const { petId } = useParams();
 
@@ -11,6 +18,31 @@ const Details = () => {
       setPet(pet);
     });
   }, []);
+
+  const deleteHandler = (e) => {
+    e.preventDefault();
+
+    petService.deleteOne(petId, user.accessToken).then(() => {
+      navigate("/dashboard");
+    });
+  };
+
+  const ownerButtons = (
+    <>
+      <a className="button" href="#">
+        Edit
+      </a>
+      <a className="button" href="#" onClick={deleteHandler}>
+        Delete
+      </a>
+    </>
+  );
+
+  const userButtons = (
+    <a className="button" href="#">
+      Like
+    </a>
+  );
 
   return (
     <section id="details-page" className="details">
@@ -21,20 +53,11 @@ const Details = () => {
           <img src={pet.imageUrl} />
         </p>
         <div className="actions">
-          <a className="button" href="#">
-            Edit
-          </a>
-          <a className="button" href="#">
-            Delete
-          </a>
-
-          <a className="button" href="#">
-            Like
-          </a>
+          {user._id && (user._id === pet._ownerId ? ownerButtons : userButtons)}
 
           <div className="likes">
             <img className="hearts" src="/images/heart.png" />
-            <span id="total-likes">Likes: {pet.likes}</span>
+            <span id="total-likes">Likes: {pet.likes?.length}</span>
           </div>
         </div>
       </div>

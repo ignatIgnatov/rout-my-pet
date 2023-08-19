@@ -1,7 +1,13 @@
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
 import * as petService from "../../services/petService";
 import { useNavigate } from "react-router-dom";
 
 const Create = (e) => {
+
+const {user} = useContext(AuthContext);
+
 const navigate = useNavigate();
 
   const onPetCreate = (e) => {
@@ -18,7 +24,7 @@ const navigate = useNavigate();
       description, 
       imageUrl, 
       type
-    })
+    }, user.accessToken)
       .then(result => {navigate("/dashboard")});
   };
 
@@ -60,8 +66,6 @@ const navigate = useNavigate();
               <select id="type" name="type">
                 <option value="cat">Cat</option>
                 <option value="dog">Dog</option>
-                <option value="parrot">Parrot</option>
-                <option value="reptile">Reptile</option>
                 <option value="other">Other</option>
               </select>
             </span>

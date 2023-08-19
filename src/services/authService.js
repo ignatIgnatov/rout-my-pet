@@ -1,11 +1,23 @@
-export const login = (email, password) => {
-  return fetch("http://localhost:3030/users/login", {
+import { json } from "react-router-dom";
+
+const baseUrl = "http://localhost:3030/users";
+
+export const login = async (email, password) => {
+  let res = await fetch(`${baseUrl}/login`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => res.json());
+  });
+
+  let jsonResult = await res.json();
+
+  if (res.ok) {
+    return jsonResult;
+  } else {
+    throw jsonResult.message;
+  }
 };
 
 export const getUser = () => {
@@ -19,5 +31,15 @@ export const isAuthenticated = () => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("username");
+  fetch(`${baseUrl}/logout`).then((response) => response.json());
+};
+
+export const register = (email, password) => {
+  return fetch(`${baseUrl}/register`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  }).then((res) => res.json());
 };
