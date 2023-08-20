@@ -16,23 +16,25 @@ import MyPets from "./components/MyPets/MyPets";
 import Footer from "./components/Footer/Footer";
 import Logout from "./components/Logout/Logout";
 
+const initialAuthState = {
+  accessToken: "",
+  email: "",
+  _id: "",
+};
+
 function App() {
-  const [user, setUser] = useLocalStorage("user", {
-    accessToken: "",
-    email: "",
-    _id: "",
-  });
+  const [user, setUser] = useLocalStorage("user", initialAuthState);
 
   const login = (authData) => {
     setUser(authData);
   };
 
-  const onLogout = () => {
-    //TODO: to implement
+  const logout = () => {
+    setUser(initialAuthState);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       <div id="container">
         {/* {...user} съответства на id={user.id} accessToken={user.accessToke} email={user.email} */}
         <Header />

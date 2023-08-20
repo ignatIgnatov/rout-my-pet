@@ -1,5 +1,3 @@
-import { json } from "react-router-dom";
-
 const baseUrl = "http://localhost:3030/users";
 
 export const login = async (email, password) => {
@@ -30,8 +28,13 @@ export const isAuthenticated = () => {
   return Boolean(getUser());
 };
 
-export const logout = () => {
-  fetch(`${baseUrl}/logout`).then((response) => response.json());
+export const logout = (token) => {
+  return fetch(`${baseUrl}/logout`, {
+    method: "GET",
+    headers: {
+      "X-Authorization": token,
+    },
+  });
 };
 
 export const register = (email, password) => {

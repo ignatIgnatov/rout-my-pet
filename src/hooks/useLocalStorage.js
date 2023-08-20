@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+// <-- use only by initial load by hot refresh
 const useLocalStorage = (key, initialValue) => {
   const [state, setState] = useState(() => {
     try {
@@ -11,6 +12,8 @@ const useLocalStorage = (key, initialValue) => {
       return initialValue;
     }
   });
+
+  // --/>
 
   const setItem = (value) => {
     //TODO: add support for functions
