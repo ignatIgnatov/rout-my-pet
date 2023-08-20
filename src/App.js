@@ -1,6 +1,7 @@
 import {} from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 import { AuthContext } from "./contexts/AuthContext";
 
@@ -16,10 +17,10 @@ import Footer from "./components/Footer/Footer";
 import Logout from "./components/Logout/Logout";
 
 function App() {
-  const [user, setUser] = useState({
+  const [user, setUser] = useLocalStorage("user", {
     accessToken: "",
     email: "",
-    _id: "", 
+    _id: "",
   });
 
   const login = (authData) => {
@@ -31,7 +32,7 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider value={{user, login}}>
+    <AuthContext.Provider value={{ user, login }}>
       <div id="container">
         {/* {...user} съответства на id={user.id} accessToken={user.accessToke} email={user.email} */}
         <Header />
